@@ -12,30 +12,26 @@ export const userService = {
 };
 
 // gets csrf token
-function getToken(){
+// function getToken(){
+//     const requestOptions = {
+//         method: 'GET',
+//         'mode':'no-cors'
+//     };
+
+//     return fetch(`${config.apiUrl}/init`, requestOptions).then(handleResponse);
+// }
+
+function login(username, password) { 
     const requestOptions = {
-        method: 'GET',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         'mode':'no-cors'
     };
 
-    return fetch(`${config.apiUrl}/init`, requestOptions).then(handleResponse);
-}
-
-function login(username, password) {
-    getToken().then(
-        users => {
-            console.log("data: ", users);
-        }
-    );
-
-    const requestOptions = {
-        method: 'POST',
-        'mode':'no-cors',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '' },
-        body: JSON.stringify({ username, password })
-    };
-
-    return fetch(`${config.apiUrl}/login`, requestOptions)
+    
+        // ,
+        // body: JSON.stringify({ username, password })
+    return fetch(`${config.apiUrl}/login?username=${username}&password=${password}`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
@@ -54,14 +50,14 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function register(user) {
+function register(partner) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify(partner)
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/registerPartner`, requestOptions).then(handleResponse);
 }
 
 function getAll() {
