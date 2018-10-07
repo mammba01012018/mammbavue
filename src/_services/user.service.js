@@ -24,8 +24,7 @@ export const userService = {
 function login(username, password) { 
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        'mode':'no-cors'
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     };
 
     
@@ -38,6 +37,7 @@ function login(username, password) {
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
+                console.log(JSON.stringify(user));
             }
 
             return user;
@@ -101,6 +101,7 @@ function _delete(id) {
 
 function handleResponse(response) {
     return response.text().then(text => {
+    	console.log("response=" + text);
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401) {
