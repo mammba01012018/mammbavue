@@ -25,7 +25,7 @@
           <tbody>
             <tr>
               <td v-for="site in sites">
-                <img v-bind:src="site.img">
+                <b-img  style="width:250px;height:150px;"thumbnail fluid :src="site.img" alt="Responsive image" />
                 <p>{{site.desc}}</p>
               </td>
             </tr>
@@ -45,19 +45,19 @@ export default {
     return {
       place: '',
       sites:[{
-        img:'src/assets/places/1.jpg',
+        img:'https://www.pandotrip.com/wp-content/uploads/2015/08/Top-10-Google-Homebush-Bay.jpg',
         desc: 'Lorem ipsum'
       },
       {
-        img:'src/assets/places/2.jpg',
+        img:'https://www.pandotrip.com/wp-content/uploads/2015/08/Top-10-Google-Aral-740x555.jpg',
         desc: 'Lorem ipsum'
       },
       {
-        img:'src/assets/places/3.jpg',
+        img:'https://www.pandotrip.com/wp-content/uploads/2015/08/Top-10-Google-Ayamonte3-740x368.jpg',
         desc: 'Lorem ipsum'
       },
       {
-        img:'src/assets/places/4.jpg',
+        img:'https://www.pandotrip.com/wp-content/uploads/2015/08/Top-10-Google-Grand-Prismatic4.jpg',
         desc: 'Lorem ipsum'
       }]
 
