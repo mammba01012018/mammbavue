@@ -56,6 +56,10 @@ export default {
           }
 
         /* eslint-enable no-console */
+      }, response =>{
+        console.log(response);
+        // this.flash({ message: 'some message', variant: 'success' });
+        // this.$store.commit('FLASH/SET_FLASH', { message: 'some message', variant: 'success' });
       });
     }
   },
