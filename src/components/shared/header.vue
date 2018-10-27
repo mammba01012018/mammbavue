@@ -9,7 +9,8 @@
     <div class="col-sm-4">
       <nav>
         <ul>
-          <li><img src="../../assets/login.png" alt="MAMMBA LOGO" height="25" width="25"> <span>LOGIN</span></li>
+          <li v-if="!isLoggedIn" v-on:click="showModal()"><img src="../../assets/login.png" alt="MAMMBA LOGO" height="25" width="25"> <span>LOGIN</span></li>
+          <li v-if="isLoggedIn" v-on:click="logout()"><img src="../../assets/login.png" alt="MAMMBA LOGO" height="25" width="25"> <span>LOGOUT</span></li>
         </ul>
       </nav>
       <modal ref="modal">
@@ -22,6 +23,7 @@
 
 <script>
 import modal from '../../components/shared/modal.vue';
+import { bus } from '../../main';
 
 export default {
   components:{
@@ -29,13 +31,30 @@ export default {
   },
   data () {
     return {
+      isLoggedIn: false
     }
   },
   methods:{
     showModal: function(){
-      this.$refs.modal.$refs.mammbaModal.show();
-    }
-  }
+     bus.$emit('showModal', true);
+   },
+   logout: function(){
+     // remove user from local storage to log user out
+    localStorage.removeItem('user');
+    this.isLoggedIn = false;
+    this.$router.push('/');
+   }
+ },
+ created(){
+   const loggedIn = localStorage.getItem('user');
+   if(loggedIn){
+     this.isLoggedIn = true;
+   }
+
+   bus.$on('login', (data) => {
+     this.isLoggedIn = data;
+   })
+ }
 }
 </script>
 

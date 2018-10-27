@@ -6,18 +6,22 @@
                  type="text" :state="emailState"
                  placeholder="Email"></b-form-input>
     </div>
-
+    <br/>
     <div>
       <b-form-input v-model="password"
                  type="password" :state="passwordState"
                  placeholder="Password"></b-form-input>
     </div>
-
-    <div  class="text-center login-registration-link">Don't have an account? <span class="modal-signup">Signup here</span></div>
+    <br/><br/>
+    <div  class="text-center login-registration-link">
+      Don't have an account? <router-link to="/register" @click.native="hideModal()"><a>Sign up here</a></router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import { bus } from '../main';
+
 export default {
   data () {
     return {
@@ -28,6 +32,9 @@ export default {
     }
   },
   methods: {
+    hideModal: function(){
+     bus.$emit('showModal', false);
+    }
   }
 }
 </script>

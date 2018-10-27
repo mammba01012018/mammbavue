@@ -1,8 +1,7 @@
 <template>
   <div>
-    <b-btn v-b-modal.mammbaModal>Launch login modal</b-btn>
     <!-- Modal Component -->
-    <b-modal id="mammbaModal" ref="mammbaModal">
+    <b-modal v-model="show" id="mammbaModal" ref="mammbaModal">
       <div slot="modal-title">
         <slot name="title" class="text-center"></slot>
       </div>
@@ -23,6 +22,8 @@
 <script>
 import login from '../../components/login.vue';
 import register from '../../components/register.vue';
+import { router } from '../../main';
+import { bus } from '../../main';
 
 export default {
   components:{
@@ -33,18 +34,37 @@ export default {
     return {
       title: 'LOGIN',
       content: 'login',
-      'btnText': 'Login'
+      'btnText': 'Login',
+      show: false
     }
   },
   methods:{
     login: function(){
-      //username=spongebob@mammba.com&password=partner123
-      this.$http.post('http://jpcloudusa021.nshostserver.net:33926/mammba/login?username='+ this.$refs.login.email +'&password=' + this.$refs.login.password,{}).then(function(data){
+        //username=spongebob@mammba.com&password=partner123
+      this.$http.post('http://jpcloudusa021.nshostserver.net:33926/mammba/login?username='+ this.$refs.login.email +'&password=' + this.$refs.login.password,{})
+      .then(function(data){
+        /* eslint-disable no-console */
         console.log(data);
+
+        if (data.body._csrf) {
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              localStorage.setItem('user', JSON.stringify(data));
+              console.log('data stored');
+              this.$router.push('/dashboard');
+              this.show = false;
+              bus.$emit('login', true);
+          }
+
+        /* eslint-enable no-console */
       });
     }
+  },
+  created(){
+    bus.$on('showModal', (data) => {
+      this.show = data;
+    })
   }
-}
+};
 </script>
 
 <style lang="scss">

@@ -10,6 +10,7 @@
 import login from './components/login.vue';
 import register from './components/register.vue';
 import home from './components/home.vue';
+import dashboard from './components/dashboard.vue';
 
 //shared components
 import header from './components/shared/header.vue';
